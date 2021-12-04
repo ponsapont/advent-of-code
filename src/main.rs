@@ -2,7 +2,7 @@ use chrono::{Datelike, Utc};
 
 extern crate advent_of_code_2021;
 
-use advent_of_code_2021::{day1, Aoc2021, Parts};
+use advent_of_code_2021::*;
 use anyhow::Result;
 use structopt::StructOpt;
 
@@ -20,6 +20,10 @@ pub fn main() -> Result<()> {
         1 => match args.part {
             Parts::Part1 => day1::part1(&input)?,
             Parts::Part2 => day1::part2(&input)?,
+        },
+        2 => match args.part {
+            Parts::Part1 => day2::part1(&input)?,
+            Parts::Part2 => (),//day2::part2(&input)?,
         },
         day => panic!(format!("Day {} not implemented!", day)),
     };
