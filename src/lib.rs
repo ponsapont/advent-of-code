@@ -5,6 +5,7 @@ extern crate structopt;
 
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 /// Advent of Code 2021
 #[derive(StructOpt, Debug)]

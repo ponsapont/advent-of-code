@@ -69,10 +69,9 @@ pub fn part2(input: &str) -> Result<()> {
             Direction::Forward => {
                 horizontal += command.units;
                 depth += vertical * command.units;
-            },
+            }
         }
     }
     println!("Result: {}", (horizontal * depth));
     Ok(())
 }
-
