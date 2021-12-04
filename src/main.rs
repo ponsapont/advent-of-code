@@ -1,0 +1,27 @@
+use chrono::{Datelike, Utc};
+
+extern crate advent_of_code_2021;
+
+use advent_of_code_2021::{day1, Aoc2021, Parts};
+use anyhow::Result;
+use structopt::StructOpt;
+
+pub fn main() -> Result<()> {
+    let args = Aoc2021::from_args();
+    let day = if let Some(day) = args.day {
+        day
+    } else {
+        Utc::today().day()
+    };
+
+    let input = std::fs::read_to_string(format!("input/day{}.txt", day))
+        .expect(&format!("Input for day {} not found!", day));
+    match day {
+        1 => match args.part {
+            Parts::Part1 => day1::part1(&input)?,
+            Parts::Part2 => (),
+        },
+        day => panic!(format!("Day {} not implemented!", day)),
+    };
+    Ok(())
+}
