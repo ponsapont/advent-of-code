@@ -19,7 +19,7 @@ pub fn main() -> Result<()> {
     match day {
         1 => match args.part {
             Parts::Part1 => day1::part1(&input)?,
-            Parts::Part2 => (),
+            Parts::Part2 => day1::part2(&input)?,
         },
         day => panic!(format!("Day {} not implemented!", day)),
     };
