@@ -54,3 +54,25 @@ pub fn part1(input: &str) -> Result<()> {
     println!("Result: {}", (horizontal * vertical));
     Ok(())
 }
+
+pub fn part2(input: &str) -> Result<()> {
+    let commands = read_input(input);
+
+    let mut horizontal = 0;
+    let mut vertical = 0;
+    let mut depth = 0;
+
+    for command in &commands {
+        match command.direction {
+            Direction::Down => vertical += command.units,
+            Direction::Up => vertical -= command.units,
+            Direction::Forward => {
+                horizontal += command.units;
+                depth += vertical * command.units;
+            },
+        }
+    }
+    println!("Result: {}", (horizontal * depth));
+    Ok(())
+}
+
