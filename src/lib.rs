@@ -1,3 +1,5 @@
+#![feature(split_inclusive)]
+
 use std::{num::ParseIntError, str::FromStr};
 
 #[macro_use]

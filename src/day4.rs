@@ -20,7 +20,7 @@ impl Board {
     pub fn mark(&mut self, number: &i32) {
         let found = self.content.iter().enumerate().find_map(|(row_idx, row)| {
             let col_idx = row.iter().enumerate().find_map(|(col_idx, cell)| {
-                if *cell == *number{
+                if *cell == *number {
                     Some(col_idx)
                 } else {
                     None
@@ -68,13 +68,15 @@ impl Board {
             return 0;
         }
         let winning_number = self.winning_number.unwrap();
-        let score = self.content.iter().fold(0, |acc, row| {
-            acc + row.iter().fold(0, |acc, col| acc + col)
-        });
+        let score = self
+            .content
+            .iter()
+            .fold(0, |acc, row| acc + row.iter().fold(0, |acc, col| acc + col));
         // Remove now the marked ones
-        let score = self.marked.iter().fold(score, |acc, (x,y)| {
-            acc - self.content[*x][*y]
-        });
+        let score = self
+            .marked
+            .iter()
+            .fold(score, |acc, (x, y)| acc - self.content[*x][*y]);
         score * winning_number
     }
 }
@@ -100,7 +102,6 @@ pub fn parse_input(input: &str) -> (Vec<i32>, Vec<Board>) {
     (numbers, boards)
 }
 
-
 pub fn part1(input: &str) -> Result<()> {
     let (numbers, mut boards) = parse_input(input);
 
@@ -109,7 +110,7 @@ pub fn part1(input: &str) -> Result<()> {
         for board in &mut boards {
             if board.is_winner(number) {
                 winner = Some(board.clone());
-                break
+                break;
             }
         }
         if winner.is_some() {
@@ -118,7 +119,11 @@ pub fn part1(input: &str) -> Result<()> {
     }
 
     if let Some(winner) = winner {
-        println!("Winner found with number {} and score {}", winner.winning_number.unwrap(), winner.get_score());
+        println!(
+            "Winner found with number {} and score {}",
+            winner.winning_number.unwrap(),
+            winner.get_score()
+        );
     }
     Ok(())
 }
@@ -142,7 +147,11 @@ pub fn part2(input: &str) -> Result<()> {
         }
     }
     let last_winner = last_winner.unwrap();
-    println!("Last winner is board with winning number {} and score {}", last_winner.winning_number.unwrap(), last_winner.get_score());
+    println!(
+        "Last winner is board with winning number {} and score {}",
+        last_winner.winning_number.unwrap(),
+        last_winner.get_score()
+    );
 
     Ok(())
 }

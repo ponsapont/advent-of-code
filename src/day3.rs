@@ -30,12 +30,13 @@ pub fn part2(input: &str) -> Result<()> {
     let reports: Vec<&str> = input.split("\n").collect();
     let report_length = reports[0].len();
 
-    let (mut oxigen, mut co2): (Vec<&str>, Vec<&str>) =
-        (reports.iter().map(|x|*x).collect(), reports.iter().map(|x|*x).collect());
+    let (mut oxigen, mut co2): (Vec<&str>, Vec<&str>) = (
+        reports.iter().map(|x| *x).collect(),
+        reports.iter().map(|x| *x).collect(),
+    );
     for idx in 0..report_length {
         oxigen = select_by_criteria(true, idx, oxigen);
         co2 = select_by_criteria(false, idx, co2);
-
     }
     let oxigen = i32::from_str_radix(oxigen[0], 2)?;
     let co2 = i32::from_str_radix(co2[0], 2)?;
