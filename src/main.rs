@@ -33,6 +33,10 @@ pub fn main() -> Result<()> {
             Parts::Part1 => day4::part1(&input)?,
             Parts::Part2 => day4::part2(&input)?,
         },
+        5 => match args.part {
+            Parts::Part1 => day5::part1(&input)?,
+            Parts::Part2 => day5::part2(&input)?,
+        },
         day => panic!(format!("Day {} not implemented!", day)),
     };
     Ok(())
