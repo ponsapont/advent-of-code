@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Board {
     content: Vec<Vec<i32>>,
     marked: Vec<(usize, usize)>,
@@ -39,6 +39,10 @@ impl Board {
 
     /// Iterates over the marked cells and determines if the current board is a winner
     pub fn is_winner(&mut self, number: &i32) -> bool {
+        // Skip if already won
+        if self.winning_number.is_some() {
+            return true;
+        }
         self.mark(number);
         if self.marked.len() < self.board_width {
             return false;
@@ -119,6 +123,26 @@ pub fn part1(input: &str) -> Result<()> {
     Ok(())
 }
 
-pub fn part2(_input: &str) -> Result<()> {
+pub fn part2(input: &str) -> Result<()> {
+    let (numbers, mut boards) = parse_input(input);
+
+    let num_boards = boards.len();
+    let mut winners: Vec<Board> = Vec::new();
+    let mut last_winner: Option<Board> = None;
+    for number in &numbers {
+        for board in &mut boards {
+            if board.is_winner(number) && !winners.contains(board) {
+                let new_winner = board.clone();
+                println!("Found winner for number: {}", number);
+                winners.push(new_winner);
+                if winners.len() == num_boards {
+                    last_winner = Some(board.clone());
+                }
+            };
+        }
+    }
+    let last_winner = last_winner.unwrap();
+    println!("Last winner is board with winning number {} and score {}", last_winner.winning_number.unwrap(), last_winner.get_score());
+
     Ok(())
 }
