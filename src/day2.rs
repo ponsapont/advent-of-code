@@ -20,7 +20,7 @@ impl FromStr for Direction {
             "forward" => Self::Forward,
             "down" => Self::Down,
             "up" => Self::Up,
-            other => panic!(format!("Invalid direction: {}", other)),
+            other => panic!("Invalid direction: {}", other),
         })
     }
 }

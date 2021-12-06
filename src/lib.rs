@@ -1,5 +1,3 @@
-#![feature(split_inclusive)]
-
 use std::{num::ParseIntError, str::FromStr};
 
 #[macro_use]
@@ -10,6 +8,7 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 /// Advent of Code 2021
 #[derive(StructOpt, Debug)]
@@ -35,7 +34,7 @@ impl FromStr for Parts {
         Ok(match part {
             1 => Self::Part1,
             2 => Self::Part2,
-            other => panic!(format!("Unsupported part: {}", other)),
+            other => panic!("Unsupported part: {}", other),
         })
     }
 }
