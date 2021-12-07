@@ -34,7 +34,7 @@ pub fn part2(input: &str) -> Result<()> {
 
     let num_days = 256;
 
-    for i in 1..=num_days {
+    for _i in 1..=num_days {
         // Update state
         state.iter_mut().for_each(|(counter,_)| *counter -=1);
         // Count how many items to add
