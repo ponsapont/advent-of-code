@@ -2,7 +2,7 @@ use anyhow::Result;
 
 
 pub fn part1(input: &str) -> Result<()> {
-    let mut state: Vec<i32> = input.split(",").map(|line| line.parse().unwrap()).collect();
+    let mut state: Vec<i32> = input.split(',').map(|line| line.parse().unwrap()).collect();
     //println!("Initial state: {:?}", state);
 
     let num_days = 80;
@@ -23,7 +23,7 @@ pub fn part1(input: &str) -> Result<()> {
 }
 
 pub fn part2(input: &str) -> Result<()> {
-    let state: Vec<i64> = input.split(",").map(|line| line.parse().unwrap()).collect();
+    let state: Vec<i64> = input.split(',').map(|line| line.parse().unwrap()).collect();
 
     // Crate a vector with <timer>,<num_occurrences>
     let mut state: Vec<(i64,i64)> = state.iter().map(|timer| (*timer,1)).collect();
@@ -62,7 +62,7 @@ pub fn join_occurences(state: Vec<(i64,i64)>) -> Vec<(i64,i64)>{
             Some(occurences)
         } else {
             None
-        }).fold(0, |acc, x| acc + x);
+        }).sum::<i64>();
         if occurrences > 0 {
             new_state.push((i, occurrences));
         }

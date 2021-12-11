@@ -75,7 +75,7 @@ pub fn part2(input: &str) -> Result<()> {
             }
         })
     }).collect();
-    scores.sort();
+    scores.sort_unstable();
     println!("Result: {}", scores[scores.len()/2]);
     //correct_lines.iter().for_each(|line| println!("{:?} @ {:?}", line.0.iter().collect::<String>(), line.1.iter().collect::<String>()));
     Ok(())

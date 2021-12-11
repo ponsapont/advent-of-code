@@ -2,7 +2,7 @@ use anyhow::Result;
 
 fn read_input(input: &str) -> Vec<i32> {
     input
-        .split("\n")
+        .split('\n')
         .into_iter()
         .map(|line| line.parse().unwrap())
         .collect()

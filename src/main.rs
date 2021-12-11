@@ -15,7 +15,7 @@ pub fn main() -> Result<()> {
     };
 
     let input = std::fs::read_to_string(format!("input/day{}.txt", day))
-        .expect(&format!("Input for day {} not found!", day));
+        .unwrap_or_else(|e| panic!("Input for day {} not found!: {}", day, e));
     match day {
         1 => match args.part {
             Parts::Part1 => day1::part1(&input)?,

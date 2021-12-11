@@ -26,11 +26,7 @@ impl Board {
                     None
                 }
             });
-            if let Some(col_idx) = col_idx {
-                Some((row_idx, col_idx))
-            } else {
-                None
-            }
+            col_idx.map(|col_idx| (row_idx, col_idx))
         });
         if let Some(found) = found {
             self.marked.push(found);
@@ -71,7 +67,7 @@ impl Board {
         let score = self
             .content
             .iter()
-            .fold(0, |acc, row| acc + row.iter().fold(0, |acc, col| acc + col));
+            .fold(0, |acc, row| acc + row.iter().sum::<i32>());
         // Remove now the marked ones
         let score = self
             .marked
@@ -83,14 +79,14 @@ impl Board {
 
 pub fn parse_input(input: &str) -> (Vec<i32>, Vec<Board>) {
     let chunks: Vec<&str> = input.split("\n\n").collect();
-    let numbers = chunks[0].split(",").map(|x| x.parse().unwrap()).collect();
+    let numbers = chunks[0].split(',').map(|x| x.parse().unwrap()).collect();
     let boards = chunks[1..]
         .iter()
         .map(|chunk| {
             let content = chunk
-                .split("\n")
+                .split('\n')
                 .map(|line| {
-                    line.split(" ")
+                    line.split(' ')
                         .filter(|x| !x.is_empty())
                         .map(|num| num.parse().unwrap())
                         .collect()

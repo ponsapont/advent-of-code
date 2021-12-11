@@ -10,33 +10,34 @@ pub fn part1(input: &str) -> Result<()> {
         .lines()
         .map(|line| {
             let input: Vec<&str> = line.split(" | ").collect();
-            (input[0].split(" ").collect(), input[1].split(" ").collect())
+            (input[0].split(' ').collect(), input[1].split(' ').collect())
         })
         .collect();
 
     // Read only the values and count the known numbers
     let result = input
         .iter()
-        .map(|(_, values)| values)
-        .flatten()
+        .flat_map(|(_, values)| values)
         .filter(|value| segment_values.contains_key(&value.len()))
         .count();
     println!("Result: {}", result);
     Ok(())
 }
 
+type Line = Vec<HashSet<char>>;
+
 pub fn part2(input: &str) -> Result<()> {
-    let input: Vec<(Vec<HashSet<char>>, Vec<HashSet<char>>)> = input
+    let input: Vec<(Line, Line)> = input
         .lines()
         .map(|line| {
             let input: Vec<&str> = line.split(" | ").collect();
             (
                 input[0]
-                    .split(" ")
+                    .split(' ')
                     .map(|segment| segment.chars().collect())
                     .collect(),
                 input[1]
-                    .split(" ")
+                    .split(' ')
                     .map(|segment| segment.chars().collect())
                     .collect(),
             )
@@ -66,8 +67,7 @@ pub fn part2(input: &str) -> Result<()> {
                         && correspondences[7]
                             .unwrap()
                             .difference(x)
-                            .collect::<Vec<&char>>()
-                            .is_empty()
+                            .count() == 0
                 })
                 .unwrap(),
         );
@@ -81,8 +81,7 @@ pub fn part2(input: &str) -> Result<()> {
                         && !correspondences[7]
                             .unwrap()
                             .difference(x)
-                            .collect::<Vec<&char>>()
-                            .is_empty()
+                            .count() == 0
                 })
                 .unwrap(),
         );
@@ -96,9 +95,7 @@ pub fn part2(input: &str) -> Result<()> {
                         && correspondences[6]
                             .unwrap()
                             .difference(x)
-                            .collect::<Vec<&char>>()
-                            .len()
-                            == 1
+                            .count() == 1
                 })
                 .unwrap(),
         );
@@ -109,10 +106,9 @@ pub fn part2(input: &str) -> Result<()> {
                 .iter()
                 .find(|x| {
                     x.len() == 5
-                        && correspondences
+                        && !correspondences
                             .iter()
-                            .find(|y| y.is_some() && *y.unwrap() == **x)
-                            .is_none()
+                            .any(|y| y.is_some() && *y.unwrap() == **x)
                 })
                 .unwrap(),
         );
@@ -126,8 +122,7 @@ pub fn part2(input: &str) -> Result<()> {
                         && correspondences[4]
                             .unwrap()
                             .difference(x)
-                            .collect::<Vec<&char>>()
-                            .is_empty()
+                            .count() == 0 
                 })
                 .unwrap(),
         );
@@ -138,10 +133,9 @@ pub fn part2(input: &str) -> Result<()> {
                 .iter()
                 .find(|x| {
                     x.len() == 6
-                        && correspondences
+                        && !correspondences
                             .iter()
-                            .find(|y| y.is_some() && *y.unwrap() == **x)
-                            .is_none()
+                            .any(|y| y.is_some() && *y.unwrap() == **x)
                 })
                 .unwrap(),
         );
@@ -153,44 +147,44 @@ pub fn part2(input: &str) -> Result<()> {
 
         segment_mappings.insert(
             *correspondences[7]
-                .difference(&correspondences[1])
+                .difference(correspondences[1])
                 .collect::<Vec<&char>>()[0],
             'a',
         );
         segment_mappings.insert(
             *correspondences[5]
-                .difference(&correspondences[3])
+                .difference(correspondences[3])
                 .collect::<Vec<&char>>()[0],
             'b',
         );
         segment_mappings.insert(
             *correspondences[2]
-                .difference(&correspondences[6])
+                .difference(correspondences[6])
                 .collect::<Vec<&char>>()[0],
             'c',
         );
         segment_mappings.insert(
             *correspondences[8]
-                .difference(&correspondences[0])
+                .difference(correspondences[0])
                 .collect::<Vec<&char>>()[0],
             'd',
         );
         segment_mappings.insert(
             *correspondences[2]
-                .difference(&correspondences[3])
+                .difference(correspondences[3])
                 .collect::<Vec<&char>>()[0],
             'e',
         );
         segment_mappings.insert(
             *correspondences[3]
-                .difference(&correspondences[2])
+                .difference(correspondences[2])
                 .collect::<Vec<&char>>()[0],
             'f',
         );
         segment_mappings.insert(
             *correspondences[9]
-                .difference(&correspondences[4])
-                .map(|x| *x)
+                .difference(correspondences[4])
+                .cloned()
                 .collect::<HashSet<char>>()
                 .difference(correspondences[7])
                 .collect::<Vec<&char>>()[0],
@@ -216,7 +210,7 @@ pub fn part2(input: &str) -> Result<()> {
             .iter()
             .map(|val| {
                 let mut as_vec = val.iter().map(|c| **c).collect::<Vec<char>>();
-                as_vec.sort();
+                as_vec.sort_unstable();
                 let string = as_vec.iter().collect::<String>();
                 match string.as_ref() {
                     "abcefg" => 0,

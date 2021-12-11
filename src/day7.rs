@@ -1,7 +1,7 @@
 use anyhow::Result;
 
 pub fn part1(input: &str) -> Result<()> {
-    let positions: Vec<i32> = input.split(",").map(|line| line.parse().unwrap()).collect();
+    let positions: Vec<i32> = input.split(',').map(|line| line.parse().unwrap()).collect();
 
     let min = *positions.iter().min().unwrap();
     let max = *positions.iter().max().unwrap();
@@ -21,7 +21,7 @@ pub fn part1(input: &str) -> Result<()> {
 }
 
 pub fn part2(input: &str) -> Result<()> {
-    let positions: Vec<i32> = input.split(",").map(|line| line.parse().unwrap()).collect();
+    let positions: Vec<i32> = input.split(',').map(|line| line.parse().unwrap()).collect();
 
     let min = *positions.iter().min().unwrap();
     let max = *positions.iter().max().unwrap();

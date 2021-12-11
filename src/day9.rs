@@ -89,8 +89,8 @@ pub fn part2(input: &str) -> Result<()> {
         basins.push(basin);
     }
     let mut lengths = basins.iter().map(|x| x.len()).collect::<Vec<usize>>();
-    lengths.sort();
+    lengths.sort_unstable();
     let lengths = &lengths[lengths.len()-3..];
-    println!("Basins: {:?}", lengths.iter().fold(1,|acc,x| acc * x));
+    println!("Basins: {:?}", lengths.iter().product::<usize>());
     Ok(())
 }

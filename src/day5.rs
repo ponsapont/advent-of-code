@@ -2,21 +2,21 @@ use std::collections::HashMap;
 
 use anyhow::Result;
 
-pub fn read_input(input: &str) -> Vec<((usize, usize), (usize, usize))> {
-    let vectors: Vec<((usize, usize), (usize, usize))> = input
+type Coord = (usize, usize);
+
+pub fn read_input(input: &str) -> Vec<(Coord, Coord)> {
+    input
         .lines()
         .map(|line| {
             let vector: Vec<&str> = line.split(" -> ").collect();
-            let start: Vec<&str> = vector[0].split(",").collect();
-            let end: Vec<&str> = vector[1].split(",").collect();
+            let start: Vec<&str> = vector[0].split(',').collect();
+            let end: Vec<&str> = vector[1].split(',').collect();
             (
                 (start[0].parse().unwrap(), start[1].parse().unwrap()),
                 (end[0].parse().unwrap(), end[1].parse().unwrap()),
             )
         })
-        .collect();
-    // Rearrange them so they are always moving to positive
-    vectors
+        // Rearrange them so they are always moving to positive
         .into_iter()
         .map(|(first, second)| {
             if first.0 > second.0 || first.0 == second.0 && first.1 > second.1 {
@@ -30,9 +30,9 @@ pub fn read_input(input: &str) -> Vec<((usize, usize), (usize, usize))> {
 
 /// Draws the vectors in a map
 pub fn paint(
-    straight: &Vec<&((usize, usize), (usize, usize))>,
-    diagonal: &Vec<&((usize, usize), (usize, usize))>,
-) -> HashMap<(usize, usize), i32> {
+    straight: &[&(Coord, Coord)],
+    diagonal: &[&(Coord, Coord)],
+) -> HashMap<Coord, i32> {
     // Build a sparse matrix
     let mut sparse_matrix = HashMap::new();
     // Paint straight
@@ -86,7 +86,7 @@ pub fn paint(
 pub fn part1(input: &str) -> Result<()> {
     let vectors = read_input(input);
     // Get only the ones with maching positions
-    let straight: Vec<&((usize, usize), (usize, usize))> = vectors
+    let straight: Vec<&(Coord, Coord)> = vectors
         .iter()
         .filter(|(first, second)| first.0 == second.0 || first.1 == second.1)
         .collect();
@@ -103,13 +103,13 @@ pub fn part2(input: &str) -> Result<()> {
     let vectors = read_input(input);
 
     // Get only the ones with maching positions
-    let straight: Vec<&((usize, usize), (usize, usize))> = vectors
+    let straight: Vec<&(Coord, Coord)> = vectors
         .iter()
         .filter(|(first, second)| first.0 == second.0 || first.1 == second.1)
         .collect();
 
     // Get only the ones with maching positions
-    let diagonal: Vec<&((usize, usize), (usize, usize))> = vectors
+    let diagonal: Vec<&(Coord, Coord)> = vectors
         .iter()
         .filter(|(first, second)| {
             (second.0 as i32 - first.0 as i32).abs() == (second.1 as i32 - first.1 as i32).abs()
