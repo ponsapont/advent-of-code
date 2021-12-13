@@ -14,6 +14,7 @@ pub mod day8;
 pub mod day9;
 pub mod day10;
 pub mod day11;
+pub mod day12;
 
 /// Advent of Code 2021
 #[derive(StructOpt, Debug)]
