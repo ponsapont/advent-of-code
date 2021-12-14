@@ -69,7 +69,11 @@ pub fn part2(input: &str) -> Result<()> {
     let (polymer, rules) = parse_input(input);
     let num_steps = 40;
     // We keep track of the occurrences of each active pair
-    let initial_state: Vec<((char, char), i64)> = polymer.chars().zip(polymer[1..].chars()).map(|s|(s,1)).collect();
+    let initial_state: Vec<((char, char), i64)> = polymer
+        .chars()
+        .zip(polymer[1..].chars())
+        .map(|s| (s, 1))
+        .collect();
     let mut counters = HashMap::new();
     polymer.chars().for_each(|c| {
         let val = counters.entry(c).or_insert(0);
@@ -78,24 +82,41 @@ pub fn part2(input: &str) -> Result<()> {
 
     let mut state = initial_state;
     for _step in 1..=num_steps {
-        let next_state: Vec<((char, char), i64)> = state.iter().flat_map(|(pair, count)| {
-            let rule = rules.iter().find(|r| r.0 == format!("{}{}", pair.0, pair.1)).unwrap();
-            let val = counters.entry(rule.1).or_insert(0);
-            *val += *count;
-            [((pair.0, rule.1), *count), ((rule.1, pair.1), *count)]
-        }).collect();
+        let next_state: Vec<((char, char), i64)> = state
+            .iter()
+            .flat_map(|(pair, count)| {
+                let rule = rules
+                    .iter()
+                    .find(|r| r.0 == format!("{}{}", pair.0, pair.1))
+                    .unwrap();
+                let val = counters.entry(rule.1).or_insert(0);
+                *val += *count;
+                [((pair.0, rule.1), *count), ((rule.1, pair.1), *count)]
+            })
+            .collect();
         // Create an unique list with updated counters
-        let mut unique: Vec<(char,char)> = next_state.iter().map(|(pair, _)| pair).cloned().collect();
+        let mut unique: Vec<(char, char)> =
+            next_state.iter().map(|(pair, _)| pair).cloned().collect();
         unique.sort_unstable();
         unique.dedup();
-        let next_state = unique.iter().map(|pair| {
-            (*pair, next_state.iter().filter(|x| x.0 == *pair).map(|x|x.1).sum())
-        }).collect();
+        let next_state = unique
+            .iter()
+            .map(|pair| {
+                (
+                    *pair,
+                    next_state
+                        .iter()
+                        .filter(|x| x.0 == *pair)
+                        .map(|x| x.1)
+                        .sum(),
+                )
+            })
+            .collect();
         state = next_state;
     }
     println!("Counters: {:?}", counters);
-    let max = counters.iter().max_by(|x,y|x.1.cmp(&y.1)).unwrap().1;
-    let min = counters.iter().min_by(|x,y|x.1.cmp(&y.1)).unwrap().1;
+    let max = counters.iter().max_by(|x, y| x.1.cmp(y.1)).unwrap().1;
+    let min = counters.iter().min_by(|x, y| x.1.cmp(y.1)).unwrap().1;
     println!("Result: {}", (max - min));
     Ok(())
 }

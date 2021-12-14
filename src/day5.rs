@@ -29,10 +29,7 @@ pub fn read_input(input: &str) -> Vec<(Coord, Coord)> {
 }
 
 /// Draws the vectors in a map
-pub fn paint(
-    straight: &[&(Coord, Coord)],
-    diagonal: &[&(Coord, Coord)],
-) -> HashMap<Coord, i32> {
+pub fn paint(straight: &[&(Coord, Coord)], diagonal: &[&(Coord, Coord)]) -> HashMap<Coord, i32> {
     // Build a sparse matrix
     let mut sparse_matrix = HashMap::new();
     // Paint straight

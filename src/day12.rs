@@ -37,15 +37,15 @@ pub fn find_paths<'a>(
                 }
                 && if part1 {
                     connection
-                    .iter()
-                    .all(|p| !small_visited.iter().any(|q| *p == **q))
+                        .iter()
+                        .all(|p| !small_visited.iter().any(|q| *p == **q))
                 } else {
                     // We want to find all the lowercase counts, and see that only 1 of them has
                     // more than 1 occurrence
                     if small_visited_uniq.len() != small_visited.len() {
                         connection
-                        .iter()
-                        .all(|p| !small_visited.iter().any(|q| *p == **q))
+                            .iter()
+                            .all(|p| !small_visited.iter().any(|q| *p == **q))
                     } else {
                         true
                     }

@@ -30,10 +30,7 @@ pub fn part2(input: &str) -> Result<()> {
     let reports: Vec<&str> = input.split('\n').collect();
     let report_length = reports[0].len();
 
-    let (mut oxigen, mut co2): (Vec<&str>, Vec<&str>) = (
-        reports.clone(),
-        reports,
-    );
+    let (mut oxigen, mut co2): (Vec<&str>, Vec<&str>) = (reports.clone(), reports);
     for idx in 0..report_length {
         oxigen = select_by_criteria(true, idx, oxigen);
         co2 = select_by_criteria(false, idx, co2);

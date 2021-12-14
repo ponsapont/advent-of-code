@@ -30,7 +30,10 @@ pub fn part2(input: &str) -> Result<()> {
         .map(|i| {
             (
                 i,
-                positions.iter().map(|position|calc_fuel(*position, i)).sum(),
+                positions
+                    .iter()
+                    .map(|position| calc_fuel(*position, i))
+                    .sum(),
             )
         })
         .min_by(|x: &(i32, i32), y| x.1.cmp(&y.1))

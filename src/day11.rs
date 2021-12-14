@@ -20,37 +20,51 @@ pub fn perform_step(_step: i32, octopuses: &mut Vec<Vec<i32>>) -> (usize, usize)
     let width = octopuses[0].len() as i32;
     // println!("Step: {}", step);
     // Step 1: Increase numbers and retrieve the next to flash
-    let mut to_flash: HashSet<(usize, usize)> = octopuses.iter_mut().enumerate().flat_map(|(i, l)| {
-        l.iter_mut().enumerate().filter_map(|(j, o)| {
-            *o += 1;
-            if *o > 9 {
-                Some((i,j))
-            } else {
-                None
-            }
-        }).collect::<HashSet<(usize,usize)>>()
-    }).collect();
+    let mut to_flash: HashSet<(usize, usize)> = octopuses
+        .iter_mut()
+        .enumerate()
+        .flat_map(|(i, l)| {
+            l.iter_mut()
+                .enumerate()
+                .filter_map(|(j, o)| {
+                    *o += 1;
+                    if *o > 9 {
+                        Some((i, j))
+                    } else {
+                        None
+                    }
+                })
+                .collect::<HashSet<(usize, usize)>>()
+        })
+        .collect();
 
     // Step 2: Perform the flash.
     // println!("To flash: {:?}", to_flash);
-    let mut flashed: HashSet<(usize,usize)> = HashSet::new();
+    let mut flashed: HashSet<(usize, usize)> = HashSet::new();
     while !to_flash.is_empty() {
         flashed.extend(to_flash.iter());
-        to_flash = to_flash.iter().flat_map(|(i,j)| {
-            (-1..=1).flat_map(|k|{
-                (-1..=1).filter_map(|l|{
-                    let x = *i as i32 + k;
-                    let y = *j as i32 + l;
-                    if x >= 0 && y >= 0 && x < height && y < width {
-                        octopuses[x as usize][y as usize] += 1;
-                        if octopuses[x as usize][y as usize] > 9 {
-                            return Some((x as usize,y as usize))
-                        }
-                    }
-                    None
-                }).collect::<HashSet<(usize,usize)>>()
-            }).collect::<HashSet<(usize,usize)>>()
-        }).collect::<HashSet<(usize,usize)>>();
+        to_flash = to_flash
+            .iter()
+            .flat_map(|(i, j)| {
+                (-1..=1)
+                    .flat_map(|k| {
+                        (-1..=1)
+                            .filter_map(|l| {
+                                let x = *i as i32 + k;
+                                let y = *j as i32 + l;
+                                if x >= 0 && y >= 0 && x < height && y < width {
+                                    octopuses[x as usize][y as usize] += 1;
+                                    if octopuses[x as usize][y as usize] > 9 {
+                                        return Some((x as usize, y as usize));
+                                    }
+                                }
+                                None
+                            })
+                            .collect::<HashSet<(usize, usize)>>()
+                    })
+                    .collect::<HashSet<(usize, usize)>>()
+            })
+            .collect::<HashSet<(usize, usize)>>();
         to_flash = to_flash.difference(&flashed).cloned().collect();
         // println!("To flash: {:?}", to_flash);
     }
@@ -59,11 +73,13 @@ pub fn perform_step(_step: i32, octopuses: &mut Vec<Vec<i32>>) -> (usize, usize)
     }
     num_flashes += flashed.len();
     // Set to 0 the flashed ones
-    octopuses.iter_mut().for_each(|l| l.iter_mut().for_each(|o| {
-        if *o > 9 {
-            *o = 0
-        }
-    }));
+    octopuses.iter_mut().for_each(|l| {
+        l.iter_mut().for_each(|o| {
+            if *o > 9 {
+                *o = 0
+            }
+        })
+    });
     (num_flashes, simultaneous)
     // octopuses.iter().for_each(|o| println!("{:?}", o));
     // println!();

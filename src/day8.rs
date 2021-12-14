@@ -62,13 +62,7 @@ pub fn part2(input: &str) -> Result<()> {
         correspondences[3] = Some(
             segments
                 .iter()
-                .find(|x| {
-                    x.len() == 5
-                        && correspondences[7]
-                            .unwrap()
-                            .difference(x)
-                            .count() == 0
-                })
+                .find(|x| x.len() == 5 && correspondences[7].unwrap().difference(x).count() == 0)
                 .unwrap(),
         );
 
@@ -76,13 +70,7 @@ pub fn part2(input: &str) -> Result<()> {
         correspondences[6] = Some(
             segments
                 .iter()
-                .find(|x| {
-                    x.len() == 6
-                        && !correspondences[7]
-                            .unwrap()
-                            .difference(x)
-                            .count() == 0
-                })
+                .find(|x| x.len() == 6 && !correspondences[7].unwrap().difference(x).count() == 0)
                 .unwrap(),
         );
 
@@ -90,13 +78,7 @@ pub fn part2(input: &str) -> Result<()> {
         correspondences[5] = Some(
             segments
                 .iter()
-                .find(|x| {
-                    x.len() == 5
-                        && correspondences[6]
-                            .unwrap()
-                            .difference(x)
-                            .count() == 1
-                })
+                .find(|x| x.len() == 5 && correspondences[6].unwrap().difference(x).count() == 1)
                 .unwrap(),
         );
 
@@ -117,13 +99,7 @@ pub fn part2(input: &str) -> Result<()> {
         correspondences[9] = Some(
             segments
                 .iter()
-                .find(|x| {
-                    x.len() == 6
-                        && correspondences[4]
-                            .unwrap()
-                            .difference(x)
-                            .count() == 0 
-                })
+                .find(|x| x.len() == 6 && correspondences[4].unwrap().difference(x).count() == 0)
                 .unwrap(),
         );
 
