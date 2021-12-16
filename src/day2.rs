@@ -27,7 +27,7 @@ impl FromStr for Direction {
 
 fn read_input(input: &str) -> Vec<Command> {
     input
-        .split('\n')
+        .lines()
         .into_iter()
         .map(|line| {
             let command: Vec<&str> = line.split_whitespace().collect();

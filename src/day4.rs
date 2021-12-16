@@ -84,7 +84,7 @@ pub fn parse_input(input: &str) -> (Vec<i32>, Vec<Board>) {
         .iter()
         .map(|chunk| {
             let content = chunk
-                .split('\n')
+                .lines()
                 .map(|line| {
                     line.split(' ')
                         .filter(|x| !x.is_empty())

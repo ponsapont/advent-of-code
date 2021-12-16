@@ -1,7 +1,7 @@
 use anyhow::Result;
 
 pub fn part1(input: &str) -> Result<()> {
-    let reports: Vec<&str> = input.split('\n').collect();
+    let reports: Vec<&str> = input.lines().collect();
     let report_length = reports[0].len();
     let majority_threshold = reports.len() / 2;
     let gamma: String = (0..report_length)
@@ -27,7 +27,7 @@ pub fn part1(input: &str) -> Result<()> {
 }
 
 pub fn part2(input: &str) -> Result<()> {
-    let reports: Vec<&str> = input.split('\n').collect();
+    let reports: Vec<&str> = input.lines().collect();
     let report_length = reports[0].len();
 
     let (mut oxigen, mut co2): (Vec<&str>, Vec<&str>) = (reports.clone(), reports);

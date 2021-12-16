@@ -67,7 +67,8 @@ impl Packet {
                 let mut subpackets = Vec::new();
                 match length_type_id {
                     0 => {
-                        let mut total_length = Self::get_bits_val(data, byte_offset, bit_offset, 15) as usize;
+                        let mut total_length =
+                            Self::get_bits_val(data, byte_offset, bit_offset, 15) as usize;
                         total_length += *byte_offset * 8 + *bit_offset;
                         while (*byte_offset * 8 + *bit_offset) < total_length as usize {
                             subpackets.push(Packet::new(data, byte_offset, bit_offset));
@@ -189,7 +190,7 @@ pub fn part2(input: &str) -> Result<()> {
     let mut bytes = parse_input(input);
     let (mut byte_offset, mut bit_offset) = (0, 0);
     let mut packets = Vec::new();
-    while byte_offset +3 < bytes.len() {
+    while byte_offset + 3 < bytes.len() {
         let packet = Packet::new(&mut bytes, &mut byte_offset, &mut bit_offset);
         packets.push(packet);
     }
