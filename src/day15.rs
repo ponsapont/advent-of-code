@@ -101,7 +101,7 @@ pub fn parse_input(input: &str) -> Vec<Rc<RefCell<Node>>> {
     graph
 }
 
-pub fn dijkstra(graph: &Vec<Rc<RefCell<Node>>>, last: Rc<RefCell<Node>>) {
+pub fn dijkstra(graph: &[Rc<RefCell<Node>>], last: Rc<RefCell<Node>>) {
     // Implement Dijkstra.
     // Start from all unvisited
     // Set distance 0 to the first node
